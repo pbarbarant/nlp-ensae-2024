@@ -88,7 +88,7 @@ def process_gender_transcript(table: pd.DataFrame) -> pd.DataFrame:
             table.iloc[i, -1] = "female"
 
     # Drop the "male" and "female" columns
-    table.drop(columns=["male", "female"])
+    table = table.drop(columns=["male", "female"])
 
     return table
 
