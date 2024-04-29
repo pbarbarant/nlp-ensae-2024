@@ -83,9 +83,9 @@ def process_gender_transcript(table: pd.DataFrame) -> pd.DataFrame:
 
         # Add the maximum of to the column "sex"
         if n_male > n_female:
-            table.iloc[i, -1] = "male"
+            table.iloc[i, -1] = "homme"
         else:
-            table.iloc[i, -1] = "female"
+            table.iloc[i, -1] = "femme"
 
     # Drop the "male" and "female" columns
     table = table.drop(columns=["male", "female"])
