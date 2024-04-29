@@ -1,6 +1,8 @@
 import pandas as pd
 from pathlib import Path
 from rapidfuzz import process, fuzz
+from sklearn import metrics
+from sklearn.preprocessing import LabelEncoder
 
 
 def loadData(path: Path) -> pd.DataFrame:
@@ -44,9 +46,7 @@ def evalAccuracy(df: pd.DataFrame) -> float:
         ground_truth = df["sex"].iloc[i]
         pred = df["prediction"].iloc[i]
 
-        if (ground_truth == "femme" and pred == "female") or (
-            ground_truth == "homme" and pred == "male"
-        ):
+        if ground_truth == pred:
             counter += 1
         else:
             firstname = str(df["firstname"].iloc[i]).lower().strip()
@@ -56,3 +56,19 @@ def evalAccuracy(df: pd.DataFrame) -> float:
                 error_dict[firstname] = 1
 
     return counter / len(df), error_dict
+
+
+def ROCCUrve(df: pd.DataFrame) -> tuple:
+    le = LabelEncoder()
+    # Remove rows with sex="ambigu"
+    df = df[df["sex"] != "ambigu"]
+    y_true = le.fit_transform(df["sex"])
+    y_pred = le.transform(df["prediction"])
+    fpr, tpr, thresholds = metrics.roc_curve(y_true, y_pred)
+    roc_auc = metrics.auc(fpr, tpr)
+    return roc_auc, metrics.RocCurveDisplay(
+        fpr=fpr,
+        tpr=tpr,
+        roc_auc=roc_auc,
+        estimator_name="Fuzzy Matching Classifier",
+    )
