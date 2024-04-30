@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nlp-ensae-2024"
+authors = [
+  {name = "Pierre-Louis Barbarant", email = "pierre-louis.barbarant@ensae.fr"},
+]
+description = "Project for the 2024 NLP course at ENSAE Paris"
+readme = "README.md"
+keywords = ["Natural Language Processing", "Fuzzy Matching"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dynamic = ["version"]
+requires-python = ">=3.7"
+dependencies = [
+    "rapidfuzz",
+    "scikit-learn",
+    "pandas",
+    "matplotlib",
+]
